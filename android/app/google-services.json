@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "407211483884",
+    "firebase_url": "https://eduvelope-afd90.firebaseio.com",
+    "project_id": "eduvelope-afd90",
+    "storage_bucket": "eduvelope-afd90.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:407211483884:android:9104640968ba68e284fbc9",
+        "android_client_info": {
+          "package_name": "com.example.eduvelope_student"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "407211483884-qeci5kgol8sakmd4qmnfu301tadj3tjs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsFF1qmaO2W--_8f3AjcuLz9T0WLf1T28"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "407211483884-qeci5kgol8sakmd4qmnfu301tadj3tjs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:407211483884:android:d333b05bd261fe9684fbc9",
+        "android_client_info": {
+          "package_name": "eduvelope.project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "407211483884-qeci5kgol8sakmd4qmnfu301tadj3tjs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsFF1qmaO2W--_8f3AjcuLz9T0WLf1T28"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "407211483884-qeci5kgol8sakmd4qmnfu301tadj3tjs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:407211483884:android:caa1575bcf8e600084fbc9",
+        "android_client_info": {
+          "package_name": "student.app.eduvelope"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "407211483884-qeci5kgol8sakmd4qmnfu301tadj3tjs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsFF1qmaO2W--_8f3AjcuLz9T0WLf1T28"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "407211483884-qeci5kgol8sakmd4qmnfu301tadj3tjs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
