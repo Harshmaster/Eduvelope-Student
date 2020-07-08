@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:studentApp/HomeScreen.dart';
 import 'package:studentApp/globalData.dart';
 
 class Login extends StatefulWidget {
@@ -14,7 +15,6 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final TextEditingController userNameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  bool toKeepLoggedIn = false;
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +22,13 @@ class _LoginState extends State<Login> {
       body: SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height,
-          child: Column(  
+          child: Column(
             children: <Widget>[
               Container(
                 width: MediaQuery.of(context).size.width - 40,
                 height: MediaQuery.of(context).size.height * 0.3,
                 child: Image.asset('assets/logo.png'),
-              ), 
+              ),
               Container(
                 margin: EdgeInsets.only(
                   left: 20,
@@ -78,6 +78,7 @@ class _LoginState extends State<Login> {
                             ),
                             hintText: "Registered Mobile",
                           ),
+                          keyboardType: TextInputType.number,
                         ),
                       ),
                     ),
@@ -96,7 +97,7 @@ class _LoginState extends State<Login> {
                     Container(
                       margin: EdgeInsets.only(bottom: 10),
                       child: Text(
-                        "Class Id", 
+                        "Class Id",
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 18,
@@ -175,12 +176,8 @@ class _LoginState extends State<Login> {
               ),
               Container(
                 height: 45,
-                margin: EdgeInsets.only(
-                  top: 20,
-                  left: 20,
-                  right: 20, 
-                  bottom: 30
-                ),
+                margin:
+                    EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 30),
                 width: double.infinity,
                 child: RaisedButton(
                   shape: RoundedRectangleBorder(
@@ -188,45 +185,26 @@ class _LoginState extends State<Login> {
                   ),
                   color: Colors.blue[900],
                   onPressed: () async {
-                    print(userNameController.text);
-                    print(passwordController.text);
                     await Firestore.instance
-                        .collection("Teachers")
-                        .where(
-                          "email",
-                          isEqualTo: userNameController.text,
-                        )
-                        .where("password",
-                            isEqualTo: passwordController.text.toString())
+                        .collection("Students")
+                        .where("mobile",
+                            isEqualTo: int.parse(userNameController.text))
+                        .where("classname", isEqualTo: passwordController.text)
                         .getDocuments()
-                        .then((QuerySnapshot docs) async {
-                      if (docs.documents.length == 0) {
-                        print("LENGTH IS ZERO");
-                      } else {
-                        // Navigator.pushReplacement(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (BuildContext context) =>
-                        //             HomeScreen()));
-                        SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
-                        if (toKeepLoggedIn) {
-                          await prefs.setString(
-                              "email", userNameController.text);
-                          await prefs.setString(
-                              "password", passwordController.text);
-                          print(docs.documents[0].data["teacherId"]);
-                          await prefs.setString(
-                              "teacherId", docs.documents[0].data["teacherId"]);
-                        } else {
-                          await prefs.setString(
-                              "teacherId", docs.documents[0].data["teacherId"]);
-                        }
+                        .then((value) {
+                      if (value.documents.length > 0) {
+                        mobile = userNameController.text;
+                        classid = passwordController.text;
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    HomeScreen()));
                       }
                     });
                   },
-                  child: Text( 
-                    'Login to Classroom', 
+                  child: Text(
+                    'Login to Classroom',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 17,

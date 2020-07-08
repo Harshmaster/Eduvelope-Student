@@ -1,11 +1,7 @@
 import 'dart:async';
-
-import './HomeScreen.dart';
 import './Login.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'HomeScreen.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -29,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (BuildContext context) => HomeScreen(),
+            builder: (BuildContext context) => Login(),
           ),
         );
       }
