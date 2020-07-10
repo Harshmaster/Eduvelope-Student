@@ -20,15 +20,15 @@ class _LiveClassScreenState extends State<LiveClassScreen> {
         }
         return ListView.builder(
           itemBuilder: (ctx, index) {
-            if (stream.data.documents[index]['className'] == classid &&
+            if (stream.data.documents[index]['className'] == globalclass &&
                 stream.data.documents[index]['active'] == true) {
               return ClassTile(
-                endTiming: stream.data.documents[index]['endTiming'],
+                endTiming: stream.data.documents[index]['end'],
                 isLive: true,
                 name: stream.data.documents[index]['className'],
                 numOfStudents: stream.data.documents[index]['students'].length,
                 standard: stream.data.documents[index]['standard'],
-                startTiming: stream.data.documents[index]['startTiming'],
+                startTiming: stream.data.documents[index]['start'], 
               );
             } else {
               return SizedBox(

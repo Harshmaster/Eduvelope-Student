@@ -8,8 +8,8 @@ import 'package:studentApp/LiveClassPage.dart';
 class ClassTile extends StatefulWidget {
   final String name;
   final int standard;
-  final int startTiming;
-  final int endTiming;
+  final String startTiming;
+  final String endTiming;
   final bool isLive;
   final int numOfStudents;
 

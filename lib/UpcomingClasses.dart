@@ -22,14 +22,14 @@ class _UpcomingClassesScreenState extends State<UpcomingClassesScreen> {
         }
         return ListView.builder(
           itemBuilder: (ctx, index) {
-            if(stream.data.documents[index]['className'] == classid && stream.data.documents[index]['active'] == false && (stream.data.documents[index]['endTiming'] > int.parse(DateFormat.H().format(DateTime.now()))*100)){
+            if(stream.data.documents[index]['className'] == globalclass && stream.data.documents[index]['active'] == false && (stream.data.documents[index]['endTiming'] > int.parse(DateFormat.H().format(DateTime.now()))*100)){
               return ClassTile(
-                endTiming: stream.data.documents[index]['endTiming'],
+                endTiming: stream.data.documents[index]['end'],
                 isLive: false,
                 name: stream.data.documents[index]['className'],
                 numOfStudents: stream.data.documents[index]['students'].length,
                 standard: stream.data.documents[index]['standard'],
-                startTiming: stream.data.documents[index]['startTiming'],
+                startTiming: stream.data.documents[index]['start'],
               );
             }
             else{

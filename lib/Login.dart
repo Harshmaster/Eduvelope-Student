@@ -13,8 +13,9 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  final TextEditingController userNameController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  bool _loading = false;
+  final TextEditingController mobileController = TextEditingController();
+  final TextEditingController idController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +56,7 @@ class _LoginState extends State<Login> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: TextField(
-                          controller: userNameController,
+                          controller: mobileController,
                           enabled: true,
                           maxLengthEnforced: true,
                           minLines: 1,
@@ -97,7 +98,7 @@ class _LoginState extends State<Login> {
                     Container(
                       margin: EdgeInsets.only(bottom: 10),
                       child: Text(
-                        "Class Id",
+                        "Student Class Id",
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 18,
@@ -112,7 +113,7 @@ class _LoginState extends State<Login> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: TextField(
-                          controller: passwordController,
+                          controller: idController,
                           enabled: true,
                           maxLengthEnforced: true,
                           minLines: 1,
@@ -133,7 +134,7 @@ class _LoginState extends State<Login> {
                               color: Colors.grey,
                               fontSize: 17,
                             ),
-                            hintText: "Enter Class Id",
+                            hintText: "Enter Student Class Id",
                           ),
                         ),
                       ),
@@ -185,32 +186,137 @@ class _LoginState extends State<Login> {
                   ),
                   color: Colors.blue[900],
                   onPressed: () async {
-                    await Firestore.instance
-                        .collection("Students")
-                        .where("mobile",
-                            isEqualTo: int.parse(userNameController.text))
-                        .where("classname", isEqualTo: passwordController.text)
-                        .getDocuments()
-                        .then((value) {
-                      if (value.documents.length > 0) {
-                        mobile = userNameController.text;
-                        classid = passwordController.text;
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    HomeScreen()));
-                      }
+                    setState(() {
+                      _loading = true;
                     });
+                    var mobile = (mobileController.text);
+                    var id = idController.text;
+                    if (mobile.isEmpty || mobile.length != 10) {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text('Error'),
+                            content:
+                                Text('Please enter a valid mobile number.'),
+                            actions: <Widget>[
+                              FlatButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  setState(() {
+                                    _loading = false;
+                                  });
+                                },
+                                child: Text('OK'),
+                              )
+                            ],
+                          );
+                        },
+                      );
+                    } else if (id.isEmpty) {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text('Error'),
+                            content: Text('Please enter a class ID.'),
+                            actions: <Widget>[
+                              FlatButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  setState(() {
+                                    _loading = false;
+                                  });
+                                },
+                                child: Text('OK'),
+                              )
+                            ],
+                          );
+                        },
+                      );
+                    } else {
+                      try {
+                        Firestore.instance
+                            .collection('Students')
+                            .where('studentId', isEqualTo: id)
+                            .where('mobile', isEqualTo: int.parse(mobile))
+                            .getDocuments()
+                            .then((value) {
+                          if (value.documents.length == 0) {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: Text('Error'),
+                                  content: Text(
+                                      'No such Student Exists. Please check the credentials.'),
+                                  actions: <Widget>[
+                                    FlatButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                        setState(() {
+                                          _loading = false;
+                                        });
+                                      },
+                                      child: Text('OK'),
+                                    )
+                                  ],
+                                );
+                              },
+                            );
+                          } else {
+                            globalmobile = mobile;
+                            globalstudentid = id;
+                            value.documents.forEach((element) {
+                              globalclass =  element.data['classname'];
+                            });
+                            print(globalclass);
+                            setState(() {
+                              _loading == false;
+                            });
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        HomeScreen()));
+                          }
+                        });
+                      } catch (err) {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text('Error'),
+                              content: Text(err.message),
+                              actions: <Widget>[
+                                FlatButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                    setState(() {
+                                      _loading = false;
+                                    });
+                                  },
+                                  child: Text('OK'),
+                                )
+                              ],
+                            );
+                          },
+                        );
+                      }
+                    }
                   },
-                  child: Text(
-                    'Login to Classroom',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 17,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  child: _loading
+                      ? Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : Text(
+                          'Login to Classroom',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                 ),
               ),
             ],

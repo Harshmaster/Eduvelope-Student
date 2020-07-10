@@ -307,7 +307,7 @@ class _LiveClassPageState extends State<LiveClassPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Agora Flutter QuickStart'),
+        title: Text('${widget.channelName} Live Class'),
       ),
       backgroundColor: Colors.black,
       body: Center(

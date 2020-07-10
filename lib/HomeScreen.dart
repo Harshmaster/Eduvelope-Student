@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:studentApp/LiveClasses.dart';
 import 'package:studentApp/UpcomingClasses.dart';
+import 'package:studentApp/globalData.dart';
 
 import 'Login.dart';
 
@@ -36,9 +37,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             actions: <Widget>[
                               FlatButton(
                                 onPressed: () async {
-                                  SharedPreferences prefs =
-                                      await SharedPreferences.getInstance();
-                                  prefs.setString("email", null);
+                                  globalclass = null;
+                                  globalstudentid = null;
+                                  globalmobile = null;
                                   Navigator.of(context).pop();
                                   Navigator.pushReplacement(
                                       context,
