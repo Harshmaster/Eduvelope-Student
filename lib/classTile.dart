@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:studentApp/LiveClassPage.dart';
+import 'package:studentApp/VirtualClassroom.dart';
+import 'package:studentApp/globalData.dart';
 
 class ClassTile extends StatefulWidget {
   final String name;
@@ -154,9 +156,9 @@ class _ClassTileState extends State<ClassTile> {
       await Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => LiveClassPage(
-            channelName: widget.name,
-            role: ClientRole.Audience,
+          builder: (context) => VirtualClassroom(
+            broadcastchannel: globalstudentid,
+            recieverchannel: widget.name,
           ),
         ),
       );
